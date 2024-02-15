@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 const server = http.createServer(app);
 
 server.listen(PORT, () => {
-  console.log(`API is running on PORT -> + ${PORT}`);
+  console.log(`API is running on PORT -> ${PORT}`);
 });
 
 const MONGO_URL = process.env.DB_HOST;

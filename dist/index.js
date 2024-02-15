@@ -48,7 +48,7 @@ app.use((0, cookie_parser_1.default)());
 app.use(body_parser_1.default.json());
 const server = http_1.default.createServer(app);
 server.listen(PORT, () => {
-    console.log(`API is running on PORT -> + ${PORT}`);
+    console.log(`API is running on PORT -> ${PORT}`);
 });
 const MONGO_URL = process.env.DB_HOST;
 mongoose_1.default.Promise = Promise;

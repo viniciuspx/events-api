@@ -1,16 +1,19 @@
-import express from "express";
-import http from "http";
-import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import compression from "compression";
-import cors from "cors";
+import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import express from "express";
 import router from "./router";
-import * as dotenv from "dotenv";
+import http from "http";
+import cors from "cors";
 
+// Dotenv
+import * as dotenv from "dotenv";
 dotenv.config();
 
+// Express App
 const app = express();
+const PORT = 8080;
 
 app.use(
   cors({
@@ -24,8 +27,8 @@ app.use(bodyParser.json());
 
 const server = http.createServer(app);
 
-server.listen(8080, () => {
-  console.log("Server running!");
+server.listen(PORT, () => {
+  console.log(`API is running on PORT -> + ${PORT}`);
 });
 
 const MONGO_URL = process.env.DB_HOST;

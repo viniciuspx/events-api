@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 import { CalendarEventsSchema } from "./schemas/CalendarEventSchema";
 
 export const ListModel = mongoose.model("Calendar", CalendarEventsSchema);
@@ -16,4 +16,6 @@ export const updateList = (
 ) =>
   ListModel.findOneAndUpdate({ userId: userId, date: date }, { list: values });
 export const deleteUserList = (userId: string) =>
-  ListModel.findOneAndDelete({ userId });
+  ListModel.deleteMany({ userId });
+export const deleteByDate = (userId: string, date: string) =>
+  ListModel.findOneAndDelete({ userId: userId, date: date });

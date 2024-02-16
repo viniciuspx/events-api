@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteEvents = exports.update = exports.create = exports.getEvents = void 0;
+exports.deleteEventByDate = exports.deleteEvents = exports.update = exports.create = exports.getEvents = void 0;
 const CalendarEvents_1 = require("../db/CalendarEvents");
 const getEvents = async (req, res) => {
     try {
@@ -67,4 +67,16 @@ const deleteEvents = async (req, res) => {
     }
 };
 exports.deleteEvents = deleteEvents;
+const deleteEventByDate = async (req, res) => {
+    try {
+        const { userId, date } = req.params;
+        const events = await (0, CalendarEvents_1.deleteByDate)(userId, date);
+        return res.status(200).json(events).end();
+    }
+    catch (error) {
+        console.log(error);
+        return res.sendStatus(400);
+    }
+};
+exports.deleteEventByDate = deleteEventByDate;
 //# sourceMappingURL=calendarEvents.js.map

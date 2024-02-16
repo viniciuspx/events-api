@@ -4,6 +4,7 @@ import {
   createList,
   updateList,
   deleteUserList,
+  deleteByDate,
 } from "../db/CalendarEvents";
 import { Response, Request } from "express";
 
@@ -66,3 +67,14 @@ export const deleteEvents = async (req: Request, res: Response) => {
     return res.sendStatus(400);
   }
 };
+
+export const deleteEventByDate = async (req: Request, res: Response) => {
+  try {
+    const { userId, date } = req.params;
+    const events = await deleteByDate(userId, date);
+    return res.status(200).json(events).end();
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+}

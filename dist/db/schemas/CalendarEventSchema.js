@@ -7,9 +7,9 @@ exports.CalendarEventsSchema = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 exports.CalendarEventsSchema = new mongoose_1.default.Schema({
     userId: { type: String, required: true },
+    date: { type: String, required: true },
     events: [
         {
-            date: { type: String },
             startTime: { type: String },
             endTime: { type: String },
             desc: { type: String },

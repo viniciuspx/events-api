@@ -1,5 +1,6 @@
 import {
   getListById,
+  getEventsByDate,
   createList,
   updateList,
   deleteUserList,
@@ -8,8 +9,8 @@ import { Response, Request } from "express";
 
 export const getEvents = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
-    const events = await getListById(userId);
+    const { userId, date } = req.params;
+    const events = await getEventsByDate(date, userId);
     return res.status(200).json(events).end();
   } catch (error) {
     console.log(error);
@@ -20,18 +21,18 @@ export const getEvents = async (req: Request, res: Response) => {
 export const create = async (req: Request, res: Response) => {
   try {
     const payload = JSON.parse(req.body.payload);
-    const { userId, events } = payload;
-    if (!userId || !events) return res.sendStatus(400);
-    const eventsExists = await getListById(userId);
+    const { userId, date, events } = payload;
+    if (!userId || !date || !events) return res.sendStatus(400);
+    const eventsExists = await getEventsByDate(date, userId);
     if (eventsExists) {
-      const updatedList = await updateList(userId, events);
-      updatedList.userId = userId;
+      const updatedList = await updateList(userId, date, events);
       updatedList.events = events;
       await updatedList.save();
       return res.status(200).json(updatedList).end();
     }
     const newList = await createList({
       userId,
+      date,
       events,
     });
     return res.status(200).json(newList).end();
@@ -43,8 +44,8 @@ export const create = async (req: Request, res: Response) => {
 
 export const update = async (req: Request, res: Response) => {
   try {
-    const { userId, events } = req.body;
-    const updatedList = await updateList(userId, events);
+    const { userId, date, events } = req.body;
+    const updatedList = await updateList(userId, date, events);
     updatedList.userId = userId;
     updatedList.events = events;
     await updatedList.save();
